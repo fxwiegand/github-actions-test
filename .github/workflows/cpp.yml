@@ -2,6 +2,9 @@ name: CI
 
 on:
   workflow_dispatch:
+    inputs:
+      tags:
+        description: 'Test scenario tags'  
   push:
     branches: [ main ]
   pull_request:
@@ -33,6 +36,10 @@ jobs:
     - name: Build binary for pedal
       run: |
         make -C $PEDAL_NAME
+        
+    - name: Echo inputs
+      run: |
+        echo "Tags: ${{ github.event.inputs.tags }}" 
         
     - name: Upload binary for terrarium
       uses: actions/upload-artifact@v2.2.1
